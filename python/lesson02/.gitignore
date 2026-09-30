@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 .venv/
 __pycache__/
 *.py[cod]
 .env
 
+=======
+>>>>>>> dcc6708aa03e8b2d8350bd0410287f6c92eb39cf
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
