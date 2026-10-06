@@ -1,20 +1,22 @@
+# for creating the WebAPI application
 from fastapi import FastAPI
-# For model definitions
+# for model definitions
 from pydantic import BaseModel
 
 # MODEL
-# Defne the data model for the request body
+# Define the data model for the request body
+# Model classes will be used to validate the request body and generate OpenAPI documentation (schemas)
 class Project(BaseModel):
     _id: int
     name: str
     due_date: str
     status: str
 
-# Mock some data
+# Mock some data - in a real application, this would be stored in a database
 projects_list = [
-    Project(_id=1, name="LAB01 GitHub Setup", due_date="2023-06-30", status="Completed"),
-    Project(_id=2, name="LAB02 Contact Manager API", due_date="2023-07-15", status="In Progress"),
-    Project(_id=3, name="Assignment 01", due_date="2023-08-01", status="Not Started")
+    Project(_id=1, name="LAB01 GitHub Setup", due_date="2026-09-28", status="Completed"),
+    Project(_id=2, name="LAB02 Contact Manager API", due_date="2026-10-05", status="In Progress"),
+    Project(_id=3, name="Assignment 01", due_date="2026-10-12", status="Not Started")
 ]
 
 # Declare the app object
@@ -22,14 +24,13 @@ projects_list = [
 # Swagger UI will be available at http://localhost:3000/docs and ReDoc at http://localhost:3000/redoc
 app = FastAPI(title="Project Management API", description="Demo API for managing projects", version="1.0.0")
 
-
 # CONTROLLER
 # Create a GET endpoint to retrieve all items
-# Rpite is defined using @app.get decorator, which specifies the HTTP method and the path (/api/projects)
+# Route is defined using the @app.get decorator, which specifies the HTTP method (GET) and the path (/api/projects)
 @app.get("/api/projects", response_model=list[Project], description="Retrieve all projects", summary="Get all projects")
-# functionality is degined as a python function that returns the list of projects
+# Functionality is defined as a Python function that returns the list of projects
 def list_projects() -> list[Project]:
-    # here would be bussiness logic, like database acces, processing, filter, pagination, sorting, etc.
-    # for now just return the list we have.
-    # VIEW fastapi will handle the serialization of the list of project objects to JJSON and return it as the response body
+    # here you would put your business logic, like database access, processing, filters, pagination, sorting, etc.
+    # for now just return the list we have
+    # VIEW fastapi will handle the serialization of the list of Project objects to JSON and return it as the response body
     return projects_list
